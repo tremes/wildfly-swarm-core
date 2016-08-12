@@ -11,6 +11,7 @@
     <module name="org.jboss.logging" export="true"/>
     <module name="org.jboss.weld.spi" slot="3"/>
     <module name="org.jboss.weld.core" slot="3"/>
+    <module name="org.jboss.weld.probe" slot="3"/>
     <module name="org.jboss.jandex"/>
   </dependencies>
 </module>

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleIdentifier;
+import org.jboss.weld.config.ConfigurationKey;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.wildfly.swarm.container.internal.Server;
@@ -70,6 +71,9 @@ public class ServerBootstrapImpl implements ServerBootstrap {
         Thread.currentThread().setContextClassLoader(module.getClassLoader());
 
         Weld weld = new Weld();
+        weld.property(Weld.DEV_MODE_SYSTEM_PROPERTY, true);
+        weld.property(ConfigurationKey.PROBE_JMX_SUPPORT.name(), true);
+//        weld.addExtension(new ProbeExtension());
         weld.setClassLoader(module.getClassLoader());
 
         // Add Extension that adds User custom bits into configurator
@@ -80,6 +84,7 @@ public class ServerBootstrapImpl implements ServerBootstrap {
             System.err.println("adding component class: " + each);
             weld.addBeanClass(each);
         }
+
 
         WeldContainer weldContainer = weld.initialize();
         SwarmConfigurator swarmConfigurator = weldContainer.select(SwarmConfigurator.class).get();
